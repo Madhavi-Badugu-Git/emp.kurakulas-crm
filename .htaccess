@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L,QSA]
+
+# Fix max_input_vars error
+php_value max_input_vars 5000

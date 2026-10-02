@@ -1,0 +1,8 @@
+*.zip
+error_log
+aws.phar
+uploads/
+vendor/
+node_modules/
+.idea/
+.env

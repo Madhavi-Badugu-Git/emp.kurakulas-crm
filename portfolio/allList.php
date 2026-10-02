@@ -1,0 +1,117 @@
+<?php 
+session_start();
+include('../includes/dbConfig.php');
+include('../includes/validation.php'); 
+include('../includes/functions.php'); 
+
+$loggedInUser = $_SESSION['loggedInUser'];
+// echo $loggedInUser;
+
+?>
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
+    data-assets-path="../assets/" data-template="vertical-menu-template-free" data-style="light">
+
+<?php include('../includes/header.php'); ?>
+
+<body>
+
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <?php include('../includes/sideMenu.php'); ?>
+
+            <div class="layout-page">
+                <?php include('../includes/navbar.php'); ?>
+
+                <div class="content-wrapper">
+                    <div class="container-xxl flex-grow-1 container-p-y">
+
+                        <div class="row">
+                            <div class="col-xl">
+                                <div class="card">
+                                    <h5 class="card-header">Portfolio List</h5>
+                                    <div class="table-responsive text-nowrap">
+                                        <table class="table">
+                                            <thead class="table-dark">
+                                                <tr>
+
+                                                    <th>Customer Name</th>
+                                                    <th>Company Name</th>
+                                                    <th>Mobile </th>
+                                                    <!-- <th>Portfolio Bank</th>
+                                                    <th>Type of Loan</th> -->
+                                                    <th>State</th>
+                                                    <th>Location</th>
+
+                                                    <th>Created By</th>
+
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                               
+                                                    $sql = mysqli_query($conn, "SELECT * FROM tbl_portfolio WHERE  status='1' ORDER BY customer_name ASC");
+                                                
+                                                if (mysqli_num_rows($sql) > 0) {
+                                                    while ($row = mysqli_fetch_assoc($sql)) {
+                                                        $id = $row['id'];
+                                                       
+                                                ?>
+                                                <tr>
+                                                    <td><?= $row['customer_name']; ?></td>
+                                                    <td><?= $row['company_name']; ?></td>
+                                                    <td>
+                                                        <?= $row['Phone_number']; ?>
+                                                    </td>
+                                                    <!-- <td>
+                                                        <?= getPortfolioBank($conn, $row['bank_name']); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= getLoanType($conn, $row['loan_type']); ?>
+                                                    </td> -->
+                                                    <td>
+                                                        <?= getStateName($conn, $row['state']); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= getLocationName($conn, $row['location']); ?>
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        <?= $row['createdBy']; ?>
+                                                    </td>
+                                                   
+                                                    <td>
+                                                        
+                                                        <a href="view?id=<?= $row['id']; ?>">
+                                                            <span class="badge bg-primary">View</span>
+                                                        </a>
+                                                     
+                                                    </td>
+
+                                                </tr>
+                                                <?php
+        }
+    }
+    ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php include('../includes/footer.php'); ?>
+                    <div class="content-backdrop fade"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <?php include('../includes/script.php'); ?>
+</body>
+
+</html>
